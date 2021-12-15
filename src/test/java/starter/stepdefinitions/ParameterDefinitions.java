@@ -3,8 +3,9 @@ package starter.stepdefinitions;
 import io.cucumber.java.Before;
 import io.cucumber.java.ParameterType;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.actors.Cast;
 import net.serenitybdd.screenplay.actors.OnStage;
-import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.serenitybdd.screenplay.playwright.abilities.BrowseTheWebWithPlaywright;
 
 public class ParameterDefinitions {
 
@@ -15,6 +16,6 @@ public class ParameterDefinitions {
 
     @Before
     public void setTheStage() {
-        OnStage.setTheStage(new OnlineCast());
+        OnStage.setTheStage(Cast.whereEveryoneCan(BrowseTheWebWithPlaywright.usingTheDefaultConfiguration()));
     }
 }

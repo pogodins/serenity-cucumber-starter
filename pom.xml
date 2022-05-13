@@ -11,7 +11,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <serenity.version>3.2.0</serenity.version>
+        <serenity.version>3.2.6-SNAPSHOT</serenity.version>
+        <junit5.version>5.8.2</junit5.version>
         <encoding>UTF-8</encoding>
     </properties>
     <dependencies>
@@ -46,9 +47,29 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit5</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUNIT 5 DEPENDENCY-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUNIT 5 CUCUMBER DEPENDENCY-->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.2.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -83,8 +104,14 @@
                         <include>**/*TestSuite.java</include>
                         <include>**/When*.java</include>
                     </includes>
-                    <parallel>classes</parallel>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    <properties>
+                        <configurationParameters>
+                            cucumber.junit-platform.naming-strategy=long
+                        </configurationParameters>
+                    </properties>
+                    <systemPropertyVariables>
+                        <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
+                    </systemPropertyVariables>
                 </configuration>
                 <executions>
                     <execution>
@@ -100,8 +127,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -111,13 +138,6 @@
                 <configuration>
                     <tags>${tags}</tags>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.serenity-bdd</groupId>
-                        <artifactId>serenity-core</artifactId>
-                        <version>${serenity.version}</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
                         <id>serenity-reports</id>
